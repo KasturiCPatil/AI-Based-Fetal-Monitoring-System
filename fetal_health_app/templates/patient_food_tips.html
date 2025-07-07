@@ -1,0 +1,340 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Menu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+ <style>
+      .food-tips-container{
+            background-color: #f9f5f6;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .food-header{
+            background-color: #7e4e60;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .food-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .food-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .intro p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: #555;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card h3 {
+            color: #7e4e60;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        
+        .card ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .card p {
+            color: #666;
+        }
+        
+        .tip-highlight {
+            background-color: #f2e9eb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 3rem 0;
+        }
+        
+        .tip-highlight h2 {
+            color: #7e4e60;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .tip-highlight ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            padding-left: 1.5rem;
+        }
+        
+        footer {
+            background-color: #7e4e60;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        footer p {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .disclaimer {
+            font-style: italic;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .tip-highlight ul {
+                grid-template-columns: 1fr;
+            }
+            
+            .food-header h1 {
+                font-size: 2rem;
+            }
+        }
+        .activate-tab
+        {
+            text-decoration: underline;
+            
+        }
+ </style>
+</head>
+<body>
+   
+  <nav class="navbar">
+    <div class="logo">MaternaCare</div>
+    <div class="menu-toggle" id="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </div>
+    <ul class="nav-links" id="nav-links">
+        <li><a href="{% url 'user_dashboard' %}"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="{% url 'view_patient_reports' %}"><i class="fas fa-user-md"></i> View Reports </a></li>
+        <li><a href="{% url 'health_tips_patient' %}"><i class="fas fa-thermometer-empty"></i> Health Tips</a></li>
+        <li><a href="{% url 'food_tips_patient' %}" class="activate-tab"><i class="fas fa-user"></i> Food Tips</a></li>
+        <li><a href="{% url 'buy_products'%}"><i class="fas fa-user"></i> Products</a></li>
+        <li><a href="{% url 'book_appointments'%}"><i class="fas fa-user"></i> Book Appoinments</a></li>
+        <li><a href="{% url 'index_page'%}"><i class="fas fa-sign-out"></i> Log out</a></li>
+      </ul>
+  </nav>
+ <section class="food-tips-container">
+    <div class="food-header">
+        <div class="header-content">
+            <h1>Essential Nutrition Guide for Pregnant Women</h1>
+            <p>Nourishing your body and your baby with the right foods</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <section class="intro">
+            <h2>Eating Well During Pregnancy</h2>
+            <p>Pregnancy is a crucial time to focus on nutrition. The foods you eat provide the essential nutrients needed for your baby's growth and development while supporting your own health. Here's a comprehensive guide to help you make the best food choices during this special journey.</p>
+        </section>
+        
+        <section class="card-container">
+            <div class="card">
+                <div class="card-image" style="background-image: url('{% static 'imgs/folate1.jpg' %}')"></div>
+                <div class="card-content">
+                    <h3>Folate-Rich Foods</h3>
+                    <p>Folate is crucial for preventing neural tube defects and supporting your baby's brain development.</p>
+                    <ul>
+                        <li>Dark leafy greens (spinach, kale)</li>
+                        <li>Legumes (lentils, chickpeas)</li>
+                        <li>Avocados</li>
+                        <li>Asparagus</li>
+                        <li>Oranges and citrus fruits</li>
+                    </ul>
+                    <p>Aim for foods rich in natural folate along with your prenatal supplement.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-image" style="background-image: url('{% static 'imgs/iron.jpg' %}')"></div>
+                <div class="card-content">
+                    <h3>Iron-Rich Foods</h3>
+                    <p>Your blood volume increases during pregnancy, requiring more iron to help deliver oxygen to your baby.</p>
+                    <ul>
+                        <li>Lean red meat</li>
+                        <li>Poultry (especially dark meat)</li>
+                        <li>Fish</li>
+                        <li>Beans and lentils</li>
+                        <li>Spinach and other dark leafy greens</li>
+                        <li>Iron-fortified cereals</li>
+                    </ul>
+                    <p>Pair with vitamin C-rich foods to enhance absorption.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-image" style="background-image: url('{% static 'imgs/calcium.jpg' %}')"></div>
+                <div class="card-content">
+                    <h3>Calcium Sources</h3>
+                    <p>Calcium is essential for developing your baby's bones, teeth, heart, and nerves.</p>
+                    <ul>
+                        <li>Dairy products (milk, yogurt, cheese)</li>
+                        <li>Fortified plant milks</li>
+                        <li>Tofu (made with calcium sulfate)</li>
+                        <li>Almonds and almond butter</li>
+                        <li>Chia seeds</li>
+                        <li>Canned salmon with bones</li>
+                    </ul>
+                    <p>Aim for 1,000 mg of calcium daily during pregnancy.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-image" style="background-image: url('{% static 'imgs/protien.jpg' %}')"></div>
+                <div class="card-content">
+                    <h3>Protein-Packed Foods</h3>
+                    <p>Protein is the building block for your baby's growth, especially in the second and third trimesters.</p>
+                    <ul>
+                        <li>Lean meats and poultry</li>
+                        <li>Fish and seafood (low-mercury options)</li>
+                        <li>Eggs</li>
+                        <li>Dairy products</li>
+                        <li>Legumes and beans</li>
+                        <li>Nuts and seeds</li>
+                        <li>Quinoa and other whole grains</li>
+                    </ul>
+                    <p>Aim for 75-100 grams of protein daily during pregnancy.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-image" style="background-image: url('{% static 'imgs/omega.jpg' %}')"></div>
+                <div class="card-content">
+                    <h3>Omega-3 Fatty Acids</h3>
+                    <p>Essential for your baby's brain and eye development.</p>
+                    <ul>
+                        <li>Low-mercury fish (salmon, sardines, trout)</li>
+                        <li>Walnuts</li>
+                        <li>Chia seeds and flaxseeds</li>
+                        <li>Algae oil supplements (vegetarian option)</li>
+                        <li>Omega-3 enriched eggs</li>
+                    </ul>
+                    <p>Aim to eat low-mercury fish 2-3 times per week or consider a prenatal DHA supplement.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-image" style="background-image: url('{% static 'imgs/hydration.jpg' %}')"></div>
+                <div class="card-content">
+                    <h3>Hydration</h3>
+                    <p>Staying well-hydrated supports amniotic fluid, helps prevent constipation, and reduces risk of UTIs.</p>
+                    <ul>
+                        <li>Water (8-10 glasses daily)</li>
+                        <li>Milk</li>
+                        <li>Fresh fruit juices (in moderation)</li>
+                        <li>Herbal teas (pregnancy-safe varieties)</li>
+                        <li>Hydrating fruits and vegetables</li>
+                    </ul>
+                    <p>Carry a water bottle and sip throughout the day.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="tip-highlight">
+            <h2>Foods to Limit or Avoid During Pregnancy</h2>
+            <ul>
+                <li>High-mercury fish (shark, swordfish, king mackerel, tilefish)</li>
+                <li>Raw or undercooked meat, poultry, eggs, and seafood</li>
+                <li>Unpasteurized dairy products and juices</li>
+                <li>Unwashed fruits and vegetables</li>
+                <li>Excessive caffeine (limit to 200mg daily)</li>
+                <li>Alcohol (no safe amount during pregnancy)</li>
+                <li>Processed foods high in added sugars and unhealthy fats</li>
+                <li>Deli meats and hot dogs (unless heated until steaming)</li>
+            </ul>
+        </section>
+        
+        <section class="tip-highlight">
+            <h2>Smart Pregnancy Snack Ideas</h2>
+            <ul>
+                <li>Greek yogurt with berries and nuts</li>
+                <li>Apple slices with nut butter</li>
+                <li>Hummus with vegetable sticks</li>
+                <li>Hard-boiled eggs</li>
+                <li>Cheese with whole grain crackers</li>
+                <li>Smoothies with greens, fruit, and yogurt</li>
+                <li>Trail mix with nuts, seeds, and dried fruit</li>
+                <li>Avocado toast on whole grain bread</li>
+                <li>Cottage cheese with fruit</li>
+                <li>Edamame</li>
+            </ul>
+        </section>
+    </div>
+    
+  
+ </section>
+ <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="FetalHealth"
+  agent-id="df7ebba8-9970-489d-a14a-9df3d27e4497"
+  language-code="en"
+></df-messenger>
+</body>
+</html>

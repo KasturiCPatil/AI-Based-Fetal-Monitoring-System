@@ -1,0 +1,413 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Menu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+  <style>
+      :root {
+            --primary-color: #8e44ad;
+            --secondary-color: #f3d8ff;
+            --accent-color: #5d3175;
+            --text-color: #333;
+            --light-text: #fff;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 16px rgba(142, 68, 173, 0.15);
+        }
+        .tips-container {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #fafafa;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header-tips {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--light-text);
+            padding: 40px 0;
+            text-align: center;
+            border-bottom: 8px solid var(--secondary-color);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+        
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 60px 40px;
+            background-color: #fff;
+            margin: 40px 0;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .hero-content {
+            width: 60%;
+        }
+        
+        .hero-image {
+            width: 35%;
+            text-align: center;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(142, 68, 173, 0.2);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .tip-list {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin: 40px 0;
+        }
+        
+        .tip {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--secondary-color);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .tip:last-child {
+            border-bottom: none;
+        }
+        
+        .tip-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .tip-content {
+            flex: 1;
+        }
+        
+        .tip-title {
+            font-weight: 600;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        
+        footer {
+            background-color: var(--accent-color);
+            color: var(--light-text);
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+        
+        .disclaimer {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 40px 0;
+            font-style: italic;
+        }
+        
+        .cta {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            padding: 40px;
+            text-align: center;
+            color: var(--light-text);
+            border-radius: var(--border-radius);
+            margin: 40px 0;
+        }
+        
+        .cta h3 {
+            color: white;
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary-color);
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                padding: 30px 20px;
+            }
+            
+            .hero-content, .hero-image {
+                width: 100%;
+            }
+            
+            .hero-image {
+                margin-top: 30px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .tip-list {
+                padding: 20px;
+            }
+        }
+        .activate-tab
+        {
+            text-decoration: underline;
+            
+        }
+  </style>
+</head>
+<body>
+   
+  <nav class="navbar">
+    <div class="logo">MaternaCare</div>
+    <div class="menu-toggle" id="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </div>
+    <ul class="nav-links" id="nav-links">
+        <li><a href="{% url 'user_dashboard' %}"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="{% url 'view_patient_reports' %}"><i class="fas fa-user-md"></i> View Reports </a></li>
+        <li><a href="{% url 'health_tips_patient' %}" class="activate-tab"><i class="fas fa-thermometer-empty"></i> Health Tips</a></li>
+        <li><a href="{% url 'food_tips_patient' %}"><i class="fas fa-user"></i> Food Tips</a></li>
+        <li><a href="{% url 'buy_products'%}"><i class="fas fa-user"></i> Products</a></li>
+        <li><a href="{% url 'book_appointments'%}"><i class="fas fa-user"></i> Book Appoinments</a></li>
+        <li><a href="{% url 'index_page'%}"><i class="fas fa-sign-out"></i> Log out</a></li>
+      </ul>
+  </nav>
+  <section class="tips-container">
+    <div class="header-tips">
+        <div class="container">
+            <h1>Health Tips for Pregnant Women</h1>
+            <p class="subtitle">Expert guidance for a healthy pregnancy journey and optimal well-being for you and your baby</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Your Pregnancy Journey</h2>
+                <p>Pregnancy is a beautiful and transformative time in a woman's life. Taking care of your health during these nine months is crucial not only for your well-being but also for the healthy development of your baby.</p>
+                <p>This guide provides essential health tips to help you navigate your pregnancy journey with confidence and joy.</p>
+            </div>
+            <div class="hero-image">
+                <img src="{% static 'imgs/p1.jpg' %}" alt="Pregnant woman" />
+            </div>
+        </section>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon">🍎</div>
+                <h3>Nutrition</h3>
+                <p>Proper nutrition is essential for your baby's development and your own health. Focus on a balanced diet rich in proteins, complex carbohydrates, healthy fats, and plenty of fruits and vegetables.</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">💪</div>
+                <h3>Exercise</h3>
+                <p>Regular physical activity can reduce pregnancy discomforts, boost your energy, and prepare your body for childbirth. Activities like walking, swimming, and prenatal yoga are excellent choices.</p>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">💤</div>
+                <h3>Rest & Sleep</h3>
+                <p>Quality sleep and sufficient rest are vital during pregnancy. Aim for 7-9 hours of sleep and include short rest periods throughout your day, especially as your pregnancy progresses.</p>
+            </div>
+        </div>
+        
+        <section class="tip-list">
+            <h2>10 Essential Health Tips for Pregnant Women</h2>
+            
+            <div class="tip">
+                <div class="tip-number">1</div>
+                <div class="tip-content">
+                    <h4 class="tip-title">Take Prenatal Vitamins</h4>
+                    <p>Start taking prenatal vitamins with folic acid as soon as you know you're pregnant (or even when planning). Folic acid helps prevent neural tube defects, while iron supports your increased blood volume and prevents anemia.</p>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <div class="tip-number">2</div>
+                <div class="tip-content">
+                    <h4 class="tip-title">Stay Hydrated</h4>
+                    <p>Drink at least 8-10 glasses of water daily. Proper hydration helps form the amniotic fluid, aids digestion, and helps transport nutrients to your baby. It also reduces the risk of urinary tract infections and constipation.</p>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <div class="tip-number">3</div>
+                <div class="tip-content">
+                    <h4 class="tip-title">Maintain a Balanced Diet</h4>
+                    <p>Focus on nutrient-dense foods like lean proteins, whole grains, fruits, vegetables, and dairy products. Aim for an additional 300-500 calories per day, depending on your trimester and activity level.</p>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <div class="tip-number">4</div>
+                <div class="tip-content">
+                    <h4 class="tip-title">Exercise Regularly</h4>
+                    <p>Engage in moderate exercise for about 30 minutes most days of the week, unless advised otherwise by your healthcare provider. Exercise can improve mood, posture, and sleep, while reducing backaches and preventing gestational diabetes.</p>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <div class="tip-number">5</div>
+                <div class="tip-content">
+                    <h4 class="tip-title">Attend Prenatal Appointments</h4>
+                    <p>Regular check-ups with your healthcare provider are essential to monitor your health and your baby's development. Don't skip appointments, and come prepared with questions or concerns.</p>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <div class="tip-number">6</div>
+                <div class="tip-content">
+                    <h4 class="tip-title">Avoid Harmful Substances</h4>
+                    <p>Avoid alcohol, tobacco, recreational drugs, and limit caffeine intake. These substances can pass through the placenta and harm your baby's development.</p>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <div class="tip-number">7</div>
+                <div class="tip-content">
+                    <h4 class="tip-title">Manage Stress</h4>
+                    <p>Practice relaxation techniques such as deep breathing, meditation, or prenatal yoga. High stress levels can affect your health and potentially your baby's development.</p>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <div class="tip-number">8</div>
+                <div class="tip-content">
+                    <h4 class="tip-title">Practice Good Hygiene</h4>
+                    <p>Wash hands frequently, especially after handling raw meat or using the bathroom. This helps prevent infections that could affect you and your baby.</p>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <div class="tip-number">9</div>
+                <div class="tip-content">
+                    <h4 class="tip-title">Get Vaccinated</h4>
+                    <p>Discuss with your healthcare provider about recommended vaccines during pregnancy, such as the flu shot and Tdap vaccine, which can protect both you and your baby.</p>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <div class="tip-number">10</div>
+                <div class="tip-content">
+                    <h4 class="tip-title">Listen to Your Body</h4>
+                    <p>Pay attention to warning signs and contact your healthcare provider if you experience severe headaches, vision changes, sudden swelling, abdominal pain, vaginal bleeding, or decreased fetal movement.</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="disclaimer">
+            <p><strong>Disclaimer:</strong> This information is for educational purposes only and does not replace professional medical advice. Always consult your healthcare provider for personalized guidance during your pregnancy.</p>
+        </div>
+        
+       
+    </div>
+    
+   
+
+  </section>
+  <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="FetalHealth"
+  agent-id="df7ebba8-9970-489d-a14a-9df3d27e4497"
+  language-code="en"
+></df-messenger>
+</body>
+</html>

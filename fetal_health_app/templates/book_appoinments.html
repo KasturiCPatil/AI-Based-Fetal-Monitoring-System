@@ -1,0 +1,244 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Menu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+  <link rel="stylesheet" href="{% static 'css/predict.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+ .accelerations-explanation {
+            width: 90%;
+            margin: 32px auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            padding: 32px;
+            background-color: #f8fbff;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            flex-wrap: wrap;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Style for left side */
+        .content-section {
+            flex: 1;
+            min-width: 320px;
+            line-height: 1.7;
+        }
+
+        .content-section h3 {
+            color: #0064c2;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e6f0ff;
+        }
+
+        .content-section ul {
+            padding-left: 20px;
+        }
+
+        .content-section ul li {
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .content-section ul li::before {
+            content: "•";
+            color: #0064c2;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        .nested-list {
+            margin-top: 10px;
+            margin-bottom: 10px !important;
+        }
+
+        .nested-list li {
+            margin-bottom: 8px !important;
+            color: #444;
+        }
+        .appointments
+        {
+            padding: 10px;
+        }
+        .appointments a{
+            color: rgb(6, 62, 135);
+            font-size: 18px;
+            text-decoration: none;
+        }
+        .conclusion {
+            margin-top: 20px;
+            font-weight: 500;
+            color: #0064c2;
+        }
+
+        /* Style for right side */
+        .chart-section {
+            flex: 1;
+            min-width: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chart-section h2 {
+            margin-bottom: 24px;
+            font-size: 1.6rem;
+            color: #0064c2;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Style and resize the chart */
+        #fetalChart {
+            width: 100% !important;
+            height: auto !important;
+            max-width: 550px;
+            max-height: 500px;
+            box-shadow: 0 4px 12px rgba(0, 100, 194, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            background-color: white;
+        }
+        #fetalChart-1 {
+            width: 100% !important;
+            height: auto !important;
+            max-width: 550px;
+            max-height: 500px;
+            box-shadow: 0 4px 12px rgba(0, 100, 194, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            background-color: white;
+        }
+
+        @media (max-width: 768px) {
+            .accelerations-explanation {
+                padding: 20px;
+                gap: 24px;
+            }
+            
+            .chart-section h2 {
+                margin-top: 20px;
+            }
+        }
+        .activate-tab
+        {
+            text-decoration: underline;
+        }
+  </style>
+</head>
+<body>
+    {% if error %}
+        <script>
+            alert('{{message}}')
+        </script>
+    {%endif%}
+  <nav class="navbar">
+    <div class="logo">MaternaCare</div>
+    <div class="menu-toggle" id="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </div>
+    <ul class="nav-links" id="nav-links">
+        <li><a href="{% url 'user_dashboard' %}"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="{% url 'view_patient_reports' %}"><i class="fas fa-user-md"></i> View Reports </a></li>
+        <li><a href="{% url 'health_tips_patient' %}"><i class="fas fa-thermometer-empty"></i> Health Tips</a></li>
+        <li><a href="{% url 'food_tips_patient' %}"><i class="fas fa-user"></i> Food Tips</a></li>
+        <li><a href="{% url 'buy_products'%}"><i class="fas fa-user"></i> Products</a></li>
+        <li><a href="{% url 'book_appointments'%}" class="activate-tab"><i class="fas fa-user"></i> Book Appoinments</a></li>
+        <li><a href="{% url 'index_page'%}"><i class="fas fa-sign-out"></i> Log out</a></li>
+      </ul>
+  </nav>
+  <section class="main-predict-container">
+    
+    <div class="container-predict">
+        <div class="appointments"><a href="{% url 'view_all_appointments' %}">View all appintments and status</a></div>
+      <div class="form-header">
+          <h2>Book Appointment</h2>
+      </div>
+      <form class="form-body" action="{% url 'save_appointment' %}" method="post">
+        {% csrf_token %}
+          <div class="input-group">
+              <label for="doctor_name">Doctor Name</label>
+              <select id="doctor_name" name="doctor_name">
+                <option value="--Select--" disabled>--Select--</option>
+                {% for dc in doctors %}
+                  <option value="{{dc.emailid}}">{{dc.fullname}}</option>
+                {%endfor%}
+              </select>
+          </div>
+          <div class="input-group">
+              <label for="date">Date</label>
+              <input type="date" id="date" name="appointment_date" required/>
+          </div>
+          <div class="input-group">
+              <label for="time">Time</label>
+              <select id="time" name="appointment_time" required>
+                <!-- Time slots will be inserted here by JavaScript -->
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="reason">Reason</label>
+            <input type="text" id="reason" name="reason" required/>
+        </div>
+          
+          <input type="submit" class="submit-btn" class="Predict and Upload report">
+      </form>
+      {% if prediction %}
+        <p>{{prediction}}</p>
+      {%endif%}
+      {% if save_status %}
+        <p>{{save_status}}</p>
+      {%endif%}
+  </div>
+</section>
+
+<script>
+    // Set minimum date to tomorrow
+    window.onload = function() {
+        // Set minimum date
+        var today = new Date();
+        today.setDate(today.getDate() + 1); // move to tomorrow
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; 
+        var yyyy = today.getFullYear();
+    
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+        var tomorrow = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("date").setAttribute("min", tomorrow);
+    
+        // Generate time slots
+        var timeSelect = document.getElementById("time");
+        var startHour = 10;
+        var endHour = 20; // 8 PM is 20:00 in 24hr
+        var interval = 30; // interval in minutes
+    
+        for (var hour = startHour; hour <= endHour; hour++) {
+            for (var min = 0; min < 60; min += interval) {
+                var h = hour < 10 ? '0' + hour : hour;
+                var m = min < 10 ? '0' + min : min;
+                var timeStr = h + ':' + m;
+    
+                // At 20:00 only add 8:00 PM not 8:30 PM
+                if (hour === endHour && min > 0) continue;
+    
+                var option = document.createElement("option");
+                option.value = timeStr;
+                option.text = timeStr;
+                timeSelect.appendChild(option);
+            }
+        }
+    };
+    </script>
+</body>
+</html>

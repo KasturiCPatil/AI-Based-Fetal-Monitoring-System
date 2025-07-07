@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Menu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+  <style>
+      .product-container {
+            background-color: #f9f7f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .product-header {
+            background-color: #f0e6ed;
+            text-align: center;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-size: 2.2rem;
+            color: #7b5c83;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .tagline {
+            color: #7b5c83;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .intro h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #7b5c83;
+        }
+        
+        .intro p {
+            max-width: 800px;
+            margin: 0 auto;
+            color: #666;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 220px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        img
+        {
+            width:100px;
+            height:100px;
+        }
+        
+        .product-content {
+            padding: 1.5rem;
+        }
+        
+        .product-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #7b5c83;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #7b5c83;
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #7b5c83;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #6a4e71;
+        }
+        
+        footer {
+            background-color: #f0e6ed;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-text {
+            color: #7b5c83;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .products {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+        .activate-tab
+        {
+            text-decoration: underline;
+            
+        }
+  </style>
+</head>
+<body>
+   
+  <nav class="navbar">
+    <div class="logo">MaternaCare</div>
+    <div class="menu-toggle" id="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </div>
+    <ul class="nav-links" id="nav-links">
+        <li><a href="{% url 'user_dashboard' %}"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="{% url 'view_patient_reports' %}"><i class="fas fa-user-md"></i> View Reports </a></li>
+        <li><a href="{% url 'health_tips_patient' %}"><i class="fas fa-thermometer-empty"></i> Health Tips</a></li>
+        <li><a href="{% url 'food_tips_patient' %}"><i class="fas fa-user"></i> Food Tips</a></li>
+        <li><a href="{% url 'buy_products'%}" class="activate-tab"><i class="fas fa-user"></i> Products</a></li>
+        <li><a href="{% url 'book_appointments'%}"><i class="fas fa-user"></i> Book Appoinments</a></li>
+        <li><a href="{% url 'index_page'%}"><i class="fas fa-sign-out"></i> Log out</a></li>
+      </ul>
+  </nav>
+  <section class="product-container">
+    
+    
+    <div class="container">
+        <div class="intro">
+            <h2>Discover Our Premium Baby Collection</h2>
+            <p>Carefully selected products that combine quality, safety, and comfort for your baby's well-being. Each item is chosen with love and care to make parenting easier and more enjoyable.</p>
+        </div>
+        
+        <div class="products">
+            <!-- Product 1 -->
+            <div class="product">
+                <div class="product-image">
+                    <img src="{% static 'imgs/product_1.jpg' %}" alt="Organic Cotton Swaddle Blanket" />
+                </div>
+                <div class="product-content">
+                    <h3 class="product-name">Rash Relief Cream</h3>
+                    <p class="product-description">Himalaya Baby Rash Relief Cream with Pure Cow Ghee 50gm | Helps heal and prevent diaper rash | For baby's sensitive skin</p>
+                    <a href="https://amzn.in/d/9k4qDiV" target="_blank" class="btn">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product">
+                <div class="product-image">
+                    <img src="{% static 'imgs/Product_2.jpg' %}" alt="Smart Baby Monitor" />
+                </div>
+                <div class="product-content">
+                    <h3 class="product-name">Baby Shampoo</h3>
+                    <p class="product-description">Mother Sparsh Simply Unscented Baby Shampoo With Natural Oatmeal- 400ml | Fragrance Free Shampoo for Babies | Tear Free Baby Shampoo for New Born Sensitive Skin</p>
+                    <a href="https://amzn.in/d/heNWTpu" target="_blank" class="btn">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product">
+                <div class="product-image">
+                    <img src="{% static 'imgs/product_3.jpg' %}" alt="Ergonomic Baby Carrier" />
+                </div>
+                <div class="product-content">
+                    <h3 class="product-name">Laundry Detergents</h3>
+                    <p class="product-description">Mother Sparsh Plant Powered Baby Laundry Liquid Detergent With Bio - Enzymes and Eucalyptus Oil | Without Dyes & Optical Brighteners -1 Litre</p>
+                    <a href="https://amzn.in/d/7c0UwOE" target="_blank" class="btn">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="product">
+                <div class="product-image">
+                    <img src="{% static 'imgs/product_4.jpg' %}" alt="Natural Wooden Teething Toys" />
+                </div>
+                <div class="product-content">
+                    <h3 class="product-name">Lotions and Creams</h3>
+                    <p class="product-description">Mother Sparsh Plant Powered Baby Laundry Liquid Detergent With Bio - Enzymes and Eucalyptus Oil | Without Dyes & Optical Brighteners -1 Litre</p>
+                    <a href="https://amzn.in/d/7c0UwOE" target="_blank" class="btn">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+   
+  </section>
+</body>
+</html>

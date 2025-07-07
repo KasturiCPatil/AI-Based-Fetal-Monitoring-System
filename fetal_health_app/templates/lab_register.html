@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+    <title>Fetal Health Monitoring</title>
+    <style>
+        .activate-tab
+        {
+            text-decoration: underline;
+            
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+     {% if error %}
+     <script>
+        alert('{{ message }}');
+     </script>
+     {% endif %}
+    <header>
+        <div class="logo">
+            <div class="logo-placeholder">MaternaCare</div>
+        </div>
+        <nav>
+            <div class="nav-container">    
+                <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+                    <ul id="nav-links">
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li onclick="toggleDropdown(this)">
+                            <a href="#">Patient ▾</a>
+                            <div class="dropdown">
+                                <a href="{% url 'patient_register' %}">Register</a>
+                                <a href="{% url 'patient_login' %}">Login</a>
+                            </div>
+                        </li>
+                        <li onclick="toggleDropdown(this)">
+                            <a href="#">Doctor ▾</a>
+                            <div class="dropdown">
+                                <a href="{% url 'doctor_register' %}">Register</a>
+                                <a href="{% url 'doctor_login' %}">Login</a>
+                            </div>
+                        </li>
+                        <li onclick="toggleDropdown(this)">
+                            <a href="#">Lab Technician ▾</a>
+                            <div class="dropdown">
+                                <a href="{% url 'lab_register' %}" class="activate-tab">Register</a>
+                                <a href="{% url 'lab_login' %}">Login</a>
+                            </div>
+                        </li>
+                        <li><a href="{% url 'admin_login' %}">Admin</a></li>
+                    </ul>
+            </div>
+        </nav>
+    </header>
+    <section class="form-container">
+        <div class="container">
+            <h2>Lab Technician Registration</h2>
+            <form action="{% url 'save_lab_technician' %}" method="post">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullname" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="emailid" placeholder="Enter your email" required>
+                    </div>
+                    
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hospital">Hospital</label>
+                        <select id="hospital" name="hospital">
+                            <option value="--Select--">--Select---</option>
+                            <option value="Suchirayu Hospital">Suchirayu Hospital</option>
+                            <option value="Fortis Hospital">Fortis Hospital</option>
+                            <option value="SDM Hospital">SDM Hospital</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phoneno" placeholder="Enter your number">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmpassword" placeholder="Confirm your password" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" name="address" placeholder="Enter your address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date of birth</label>
+                        <input type="date" id="dob" name="dateofbirth" placeholder="Date of birth" required>
+                    </div>
+                </div>
+                <input type="submit" name="submit" value="Register">
+            </form>
+        </div>
+    </section>
+    
+      <script>
+        function toggleMenu() {
+            document.getElementById('nav-links').classList.toggle('active');
+        }
+        function toggleDropdown(element) {
+            if (window.innerWidth <= 768) {
+                element.classList.toggle('open');
+            }
+        }
+    </script>
+</body>
+</html>

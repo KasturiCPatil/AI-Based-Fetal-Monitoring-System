@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Menu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+  <link rel="stylesheet" href="{% static 'css/predict.css' %}">
+  <style>
+    .activate-tab
+        {
+            text-decoration: underline;
+            
+        }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">MaternaCare</div>
+    <div class="menu-toggle" id="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="{% url 'technician_upload_page' %}" class="activate-tab"><i class="fa-solid fa-file"></i> Upload Report</a></li>
+      <li><a href="{% url 'lab_report_view'%}"><i class="fas fa-user"></i> View Reports</a></li>
+      <li><a href="{% url 'index_page' %}"><i class="fas fa-sign-out"></i> Log out</a></li>
+    </ul>
+  </nav>
+  <section class="main-predict-container">
+    <div class="container-predict">
+      <div class="form-header">
+          <h2>Upload patient scan report</h2>
+      </div>
+      <form class="form-body" action="{% url 'predict_save' %}" method="post">
+        {% csrf_token %}
+        <div class="input-group">
+          <label for="hospital">Hostpital</label>
+          <select id="hospital" name="hospital">
+            <option value="--Select--" disabled>--Select--</option>
+            <option value="Suchirayu Hospital">Suchirayu Hospital</option>
+            <option value="Fortis Hospital">Fortis Hospital</option>
+            <option value="SDM Hospital">SDM Hospital</option>
+          </select>
+      </div>
+        <div class="input-group">
+          <label for="doctor_name">Select Doctor</label>
+          <select id="doctor_name" name="doctor_name">
+            <option value="--Select--" disabled>--Select--</option>
+            {% for dc in doctors %}
+              <option value="{{dc.emailid}}">{{dc.fullname}}</option>
+            {%endfor%}
+          </select>
+      </div>
+         
+          <div class="input-group">
+            <label for="patient_number">Patient Phone Number</label>
+            <select id="patient_number" name="patient_number">
+              <option value="--Select--" disabled>--Select--</option>
+              {% for dc in patients %}
+                <option value="{{dc}}">{{dc}}</option>
+              {%endfor%}
+            </select>
+        </div>
+          <div class="input-group">
+              <label for="bv">Baseline Value</label>
+              <input type="text" id="bv" name="bv" required/>
+          </div>
+          <div class="input-group">
+              <label for="acc">Accelerations</label>
+              <input type="text" id="acc" name="acc" required/>
+          </div>
+          <div class="input-group">
+              <label for="auc">Uterine Contractions</label>
+              <input type="text" id="auc" name="auc" required/>
+          </div>
+          <div class="input-group">
+              <label for="astv">Abnormal Short Term Variability</label>
+              <input type="text" id="astv" name="astv" required/>
+          </div>
+          <div class="input-group">
+              <label for="mvstv">Mean Value of Short-Term Variability</label>
+              <input type="text" id="mvstv" name="mvstv" required/>
+          </div>
+          <div class="input-group">
+              <label for="ptwaltv">Percentage of Time With Abnormal Long-Term Variability</label>
+              <input type="text" id="ptwaltv" name="ptwa" required/>
+          </div>
+          <div class="input-group">
+              <label for="hw">Histogram Width</label>
+              <input type="text" id="hw" name="hw" required/>
+          </div>
+          <div class="input-group">
+              <label for="hm">Histogram Max</label>
+              <input type="text" id="hm" name="hm" required/>
+          </div>
+          <div class="input-group">
+              <label for="hnp">Histogram No. of Peaks</label>
+              <input type="text" id="hnp" name="hnp" required/>
+          </div>
+          <div class="input-group">
+              <label for="hme">Histogram Mean</label>
+              <input type="text" id="hme" name="hme" required/>
+          </div>
+          <input type="submit" class="submit-btn" class="Predict and Upload report">
+      </form>
+      {% if prediction %}
+        <p>{{prediction}}</p>
+      {%endif%}
+      {% if save_status %}
+        <p>{{save_status}}</p>
+      {%endif%}
+  </div>
+</section>
+  <script>
+    const toggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+    toggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

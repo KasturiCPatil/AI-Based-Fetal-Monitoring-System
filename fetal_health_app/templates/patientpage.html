@@ -1,0 +1,525 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Menu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+ .accelerations-explanation {
+            width: 90%;
+            margin: 32px auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            padding: 32px;
+            background-color: #f8fbff;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            flex-wrap: wrap;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Style for left side */
+        .content-section {
+            flex: 1;
+            min-width: 320px;
+            line-height: 1.7;
+        }
+
+        .content-section h3 {
+            color: #0064c2;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e6f0ff;
+        }
+
+        .content-section ul {
+            padding-left: 20px;
+        }
+
+        .content-section ul li {
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .content-section ul li::before {
+            content: "•";
+            color: #0064c2;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        .nested-list {
+            margin-top: 10px;
+            margin-bottom: 10px !important;
+        }
+
+        .nested-list li {
+            margin-bottom: 8px !important;
+            color: #444;
+        }
+
+        .conclusion {
+            margin-top: 20px;
+            font-weight: 500;
+            color: #0064c2;
+        }
+
+        /* Style for right side */
+        .chart-section {
+            flex: 1;
+            min-width: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chart-section h2 {
+            margin-bottom: 24px;
+            font-size: 1.6rem;
+            color: #0064c2;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Style and resize the chart */
+        #fetalChart {
+            width: 100% !important;
+            height: auto !important;
+            max-width: 550px;
+            max-height: 500px;
+            box-shadow: 0 4px 12px rgba(0, 100, 194, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            background-color: white;
+        }
+        #fetalChart-1 {
+            width: 100% !important;
+            height: auto !important;
+            max-width: 550px;
+            max-height: 500px;
+            box-shadow: 0 4px 12px rgba(0, 100, 194, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            background-color: white;
+        }
+
+        @media (max-width: 768px) {
+            .accelerations-explanation {
+                padding: 20px;
+                gap: 24px;
+            }
+            
+            .chart-section h2 {
+                margin-top: 20px;
+            }
+        }
+        .activate-tab
+        {
+            text-decoration: underline;
+            
+        }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">MaternaCare</div>
+    <div class="menu-toggle" id="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="{% url 'user_dashboard' %}" class="activate-tab"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="{% url 'view_patient_reports' %}"><i class="fas fa-user-md"></i> View Reports </a></li>
+      <li><a href="{% url 'health_tips_patient' %}"><i class="fas fa-thermometer-empty"></i> Health Tips</a></li>
+      <li><a href="{% url 'food_tips_patient' %}"><i class="fas fa-user"></i> Food Tips</a></li>
+      <li><a href="{% url 'buy_products'%}"><i class="fas fa-user"></i> Products</a></li>
+      <li><a href="{% url 'book_appointments'%}"><i class="fas fa-user"></i> Book Appoinments</a></li>
+      <li><a href="{% url 'index_page'%}"><i class="fas fa-sign-out"></i> Log out</a></li>
+    </ul>
+  </nav>
+  <section class="accelerations-explanation">
+    <div class="content-section">
+        <h3>Fetal Accelerations Information</h3>
+        <ul>
+            <li>Accelerations refer to how often the fetal heart rate temporarily increases above baseline.</li>
+            <li>These speed-ups (accelerations) are a positive indicator — they demonstrate that the baby is active and healthy.</li>
+            <li>Most readings show values such as 0.006 or 0.005, representing the frequency of heart rate accelerations.</li>
+            <li>The values specifically indicate the number of heart rate accelerations per second.</li>
+            <li>For interpretation:
+                <ul class="nested-list">
+                    <li>0.005 means 1 acceleration every 200 seconds (approximately 3 minutes and 20 seconds)</li>
+                    <li>0.01 means 1 acceleration every 100 seconds (or 1 minute and 40 seconds)</li>
+                    <li>0.02 means 1 acceleration every 50 seconds</li>
+                </ul>
+            </li>
+        </ul>
+        <p class="conclusion">Higher values indicate more frequent accelerations, which is generally associated with better fetal well-being.</p>
+    </div>
+    <div class="chart-section">
+        <h2>Fetal Monitoring Analysis</h2>
+        <canvas id="fetalChart" width="450" height="450"></canvas>
+    </div>
+</section>
+<section class="accelerations-explanation">
+    <div class="content-section">
+        <h3>Fetal Histogram Information</h3>
+        <ul>
+            <li>The width of the histogram built using all heart rate values recorded in a single session.</li>
+            <li>The range of fetal heart rate values recorded during a monitoring session.</li>
+            <li>It tells us how much the fetal heart rate changed overall — from the lowest to the highest value.</li>
+            <li>A moderate variation in heart rate is normal and healthy.</li>
+            <li>For interpretation:
+                <ul class="nested-list">
+                    <li>3 – 38.4	~571	Very low variation (may indicate reduced activity)</li>
+                    <li>38.4 – 109.2	~1266	Normal/moderate variation (typically healthy)</li>
+                    <li>> 109.2	~375	High variation (may need closer observation)</li>
+                </ul>
+            </li>
+        </ul>
+        <p class="conclusion">Think of histogram_width like a mood swing meter:
+            <ul>
+                <li>A calm baby (no mood swings) = low width.</li>
+                <li>A responsive baby with healthy fluctuations = normal width.</li>
+                <li>A baby with extreme swings = high width (might need to be checked).</li>
+            </ul>
+        </p>
+    </div>
+    <div class="chart-section">
+        <h2>Fetal Monitoring Analysis</h2>
+        <canvas id="fetalChart_1" width="450" height="450"></canvas>
+    </div>
+</section>
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="FetalHealth"
+  agent-id="df7ebba8-9970-489d-a14a-9df3d27e4497"
+  language-code="en"
+></df-messenger>
+  <script>
+     const ctx = document.getElementById('fetalChart').getContext('2d');
+        const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ dates|safe }},
+            datasets: [
+            {
+                label: 'Accuracy',
+                data: {{ acc|safe }},
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                pointBorderColor: '#fff',
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                tension: 0.3,
+                fill: true
+            },
+            {
+                label: 'AUC',
+                data: {{ auc|safe }},
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                pointBorderColor: '#fff',
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                tension: 0.3,
+                fill: true
+            }
+            ]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                font: {
+                    size: 14,
+                    weight: 'bold'
+                },
+                padding: 20
+                }
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                titleFont: {
+                size: 16,
+                weight: 'bold'
+                },
+                bodyFont: {
+                size: 14
+                },
+                padding: 12,
+                displayColors: true
+            },
+            title: {
+                display: true,
+                text: 'Fetal Health Assessment Report',
+                font: {
+                size: 24,
+                weight: 'bold'
+                },
+                padding: {
+                top: 10,
+                bottom: 30
+                },
+                color: '#333'
+            },
+            subtitle: {
+                display: true,
+                text: 'Accuracy and AUC Metrics Over Time',
+                font: {
+                size: 16,
+                style: 'italic'
+                },
+                padding: {
+                bottom: 20
+                },
+                color: '#666'
+            }
+            },
+            scales: {
+            x: {
+                title: {
+                display: true,
+                text: 'Assessment Date',
+                font: {
+                    size: 16,
+                    weight: 'bold'
+                },
+                padding: {
+                    top: 10
+                }
+                },
+                grid: {
+                display: true,
+                color: 'rgba(0, 0, 0, 0.05)'
+                },
+                ticks: {
+                font: {
+                    size: 12
+                }
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Performance Metrics',
+                    font: {
+                    size: 16,
+                    weight: 'bold'
+                    },
+                    padding: {
+                    bottom: 10
+                    }
+                },
+                grid: {
+                    display: true,
+                    color: 'rgba(0, 0, 0, 0.1)'
+                },
+                ticks: {
+                    font: {
+                    size: 12
+                    },
+                    callback: function(value) {
+                    return value.toFixed(3); // more precision for small values
+                    }
+                },
+                min: 0,
+                max: 0.02
+                }
+
+            },
+            interaction: {
+            mode: 'index',
+            intersect: false
+            },
+            animation: {
+            duration: 1500,
+            easing: 'easeOutQuart'
+            },
+            layout: {
+            padding: {
+                left: 10,
+                right: 10,
+                top: 0,
+                bottom: 10
+            }
+            }
+        }
+        });
+</script>
+<script>
+        const ctx_2 = document.getElementById('fetalChart_1').getContext('2d');
+        const chart_2 = new Chart(ctx_2, {
+        type: 'line',
+        data: {
+            labels: {{ dates|safe }},
+            datasets: [
+            {
+                label: 'Histogram Width',
+                data: {{ hw|safe }},
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                pointBorderColor: '#fff',
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                tension: 0.3,
+                fill: true
+            },
+            {
+                label: 'Histogram Minimum',
+                data: {{ hm|safe }},
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                pointBorderColor: '#fff',
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                tension: 0.3,
+                fill: true
+            }
+            ]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                font: {
+                    size: 14,
+                    weight: 'bold'
+                },
+                padding: 20
+                }
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                titleFont: {
+                size: 16,
+                weight: 'bold'
+                },
+                bodyFont: {
+                size: 14
+                },
+                padding: 12,
+                displayColors: true
+            },
+            title: {
+                display: true,
+                text: 'Fetal Health Assessment Report',
+                font: {
+                size: 24,
+                weight: 'bold'
+                },
+                padding: {
+                top: 10,
+                bottom: 30
+                },
+                color: '#333'
+            },
+            subtitle: {
+                display: true,
+                text: 'Histogram Width and Histogram Minimum Over Time',
+                font: {
+                size: 16,
+                style: 'italic'
+                },
+                padding: {
+                bottom: 20
+                },
+                color: '#666'
+            }
+            },
+            scales: {
+            x: {
+                title: {
+                display: true,
+                text: 'Assessment Date',
+                font: {
+                    size: 16,
+                    weight: 'bold'
+                },
+                padding: {
+                    top: 10
+                }
+                },
+                grid: {
+                display: true,
+                color: 'rgba(0, 0, 0, 0.05)'
+                },
+                ticks: {
+                font: {
+                    size: 12
+                }
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Performance Metrics',
+                    font: {
+                    size: 16,
+                    weight: 'bold'
+                    },
+                    padding: {
+                    bottom: 10
+                    }
+                },
+                grid: {
+                    display: true,
+                    color: 'rgba(0, 0, 0, 0.1)'
+                },
+                ticks: {
+                    font: {
+                    size: 12
+                    },
+                    callback: function(value) {
+                    return value.toFixed(3); // more precision for small values
+                    }
+                },
+                min: 50,
+                max: 250
+                }
+
+            },
+            interaction: {
+            mode: 'index',
+            intersect: false
+            },
+            animation: {
+            duration: 1500,
+            easing: 'easeOutQuart'
+            },
+            layout: {
+            padding: {
+                left: 10,
+                right: 10,
+                top: 0,
+                bottom: 10
+            }
+            }
+        }
+        });
+  </script>
+</body>
+</html>

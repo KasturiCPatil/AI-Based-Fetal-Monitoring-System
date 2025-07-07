@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/loginpage.css' %}">
+    <title>Fetal Health Monitoring</title>
+    <style>
+        .activate-tab
+        {
+            text-decoration: underline;
+            
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-placeholder">MaternaCare</div>
+        </div>
+        <nav>
+            <div class="nav-container">    
+                <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+                    <ul id="nav-links">
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li onclick="toggleDropdown(this)">
+                            <a href="#">Patient ▾</a>
+                            <div class="dropdown">
+                                <a href="{% url 'patient_register' %}">Register</a>
+                                <a href="{% url 'patient_login' %}">Login</a>
+                            </div>
+                        </li>
+                        <li onclick="toggleDropdown(this)">
+                            <a href="#">Doctor ▾</a>
+                            <div class="dropdown">
+                                <a href="{% url 'doctor_register' %}">Register</a>
+                                <a href="{% url 'doctor_login' %}">Login</a>
+                            </div>
+                        </li>
+                        <li onclick="toggleDropdown(this)">
+                            <a href="#">Lab Technician ▾</a>
+                            <div class="dropdown">
+                                <a href="{% url 'lab_register' %}">Register</a>
+                                <a href="{% url 'lab_login' %}" class="activate-tab">Login</a>
+                            </div>
+                        </li>
+                        <li><a href="{% url 'admin_login' %}">Admin</a></li>
+                    </ul>
+            </div>
+        </nav>
+    </header>
+    <section>
+        <div class="screen-1">
+            <h1 style="text-align: center;">Lab Technician Login</h1>
+            <form action="{% url 'lab_technician_login_check' %}" method="post">
+                {% csrf_token %}
+                <div class="email">
+                    <label for="email">Email Address</label>
+                    <div class="sec-2">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <input type="email" name="emailid" placeholder="Username@gmail.com"/>
+                    </div>
+                </div>
+                <div class="password">
+                    <label for="password">Password</label>
+                    <div class="sec-2">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input class="pas" type="password" name="password" placeholder="············"/>
+                        <ion-icon class="show-hide" name="eye-outline"></ion-icon>
+                    </div>
+                </div>
+                <input type="submit" class="login" value="Login"/>
+                <span>Already Registered?Sign up</span>
+            </form>
+        </div>
+    </section>
+    
+      <script>
+        function toggleMenu() {
+            document.getElementById('nav-links').classList.toggle('active');
+        }
+    
+        function toggleDropdown(element) {
+            if (window.innerWidth <= 768) {
+                element.classList.toggle('open');
+            }
+        }
+    </script>
+</body>
+</html>

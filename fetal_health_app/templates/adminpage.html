@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Menu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+  <style>
+    .activate-tab
+    {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">MaternaCare</div>
+    <div class="menu-toggle" id="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="{% url 'view_admin_page' %}" class="activate-tab"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="{% url 'view_admin_doctors' %}"><i class="fas fa-user-md"></i> Doctors</a></li>
+      <li><a href="{% url 'view_admin_technician' %}"><i class="fas fa-thermometer-empty"></i> Lab Technician</a></li>
+      <li><a href="{% url 'view_admin_user' %}"><i class="fas fa-user"></i> User</a></li>
+      <li><a href="{% url 'index_page' %}"><i class="fas fa-sign-out"></i> Log out</a></li>
+    </ul>
+  </nav>
+<section>
+  <div>
+    <h1>Welcome to Admin Page</h1>
+    <p>Here you can handle the Doctors and Technician</p>
+  </div>
+</section>
+  <script>
+    const toggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+    toggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
